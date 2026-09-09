@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Kaohsiung Weekend Trip</title>
 
-<!-- --- 📱 App Icons (已更新為最新 GitHub 連結) --- -->
-<link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/kerryraquel/KHH/a31d71555a45a02a874ea9e64dfdc069e187d017/khh%20app%20icon.jpg">
+<!-- 更新後的 App Icon 連結 -->
 <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/kerryraquel/KHH/a31d71555a45a02a874ea9e64dfdc069e187d017/khh%20app%20icon.jpg">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<script src="https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.prod.js"></script>
+<!-- Tailwind CSS 與 Font Awesome -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
@@ -21,7 +18,7 @@
 :root {
   --primary: #2563eb;
   --bg-color: #f1f5f9;
-  --glass-bg: rgba(255, 255, 255, 0.85); /* 稍微調降卡片不透明度 */
+  --glass-bg: rgba(255, 255, 255, 0.88);
   --glass-border: rgba(255, 255, 255, 0.5);
 }
 
@@ -32,7 +29,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* --- Custom Background (已更新為最新 GitHub 連結) --- */
+/* --- Custom Background (使用你提供的最新 GitHub 背景連結) --- */
 .app-bg {
   background-image: url('https://raw.githubusercontent.com/kerryraquel/KHH/a31d71555a45a02a874ea9e64dfdc069e187d017/648802_0.jpg');
   background-size: cover;
@@ -42,18 +39,18 @@ body {
   z-index: -2;
 }
 
-/* --- Frosted Overlay (大幅調降濃度，讓背景更清晰，僅留輕微玻璃感) --- */
+/* --- 調整磨砂遮罩，讓背景圖透出同時兼顧可讀性 --- */
 .app-overlay {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background: linear-gradient(to bottom, rgba(241, 245, 249, 0.2) 0%, rgba(241, 245, 249, 0.5) 100%);
   position: fixed; inset: 0; z-index: -1;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 /* --- Common Components --- */
 .glass-card {
   background: var(--glass-bg);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
@@ -67,8 +64,10 @@ body {
 .timeline-item { position: relative; margin-bottom: 2rem; }
 .timeline-item:last-child { margin-bottom: 0; }
 .timeline-dot {
-  position: absolute; left: -1.95rem; top: 0.35rem; width: 14px; height: 14px;
-  background: var(--primary); border: 3px solid #fff; border-radius: 50%; box-shadow: 0 0 0 2px #bfdbfe;
+  position: absolute; left: -1.95rem; top: 0.35rem;
+  width: 14px; height: 14px;
+  background: var(--primary); border: 3px solid #fff;
+  border-radius: 50%; box-shadow: 0 0 0 2px #bfdbfe;
 }
 .timeline-dot.food { background: #f59e0b; box-shadow: 0 0 0 2px #fde68a; }
 .timeline-dot.arch { background: #7c3aed; box-shadow: 0 0 0 2px #ddd6fe; }
@@ -76,19 +75,25 @@ body {
 .timeline-dot.ferry { background: #0ea5e9; box-shadow: 0 0 0 2px #bae6fd; }
 .timeline-dot.night { background: #1e3a8a; box-shadow: 0 0 0 2px #93c5fd; }
 .timeline-dot.relax { background: #ec4899; box-shadow: 0 0 0 2px #fbcfe8; }
-.timeline-dot.alert { background: #f59e0b; box-shadow: 0 0 0 2px #fef3c7; }
+.timeline-dot.alert { background: #f97316; box-shadow: 0 0 0 2px #ffedd5; }
 
 /* Transport & Alert Tags */
-.transport-tag { display: inline-block; font-size: 0.75rem; background-color: #eff6ff; color: #3b82f6; padding: 8px 12px; border-radius: 8px; margin-top: 8px; font-weight: 600; border: 1px solid #dbeafe; line-height: 1.4; width: 100%; }
-.transport-tag i { margin-right: 4px; width: 14px; text-align: center; }
-.alert-tag { display: inline-block; font-size: 0.75rem; background-color: rgba(255, 251, 235, 0.9); color: #b45309; padding: 8px 12px; border-radius: 8px; margin-top: 8px; font-weight: 700; border: 1px solid #fde68a; line-height: 1.4; width: 100%; box-shadow: 0 2px 4px rgba(217,119,6,0.05); }
-.alert-tag i { margin-right: 4px; width: 14px; text-align: center; }
+.transport-tag, .alert-tag {
+  display: inline-block; font-size: 0.75rem; padding: 8px 12px;
+  border-radius: 8px; margin-top: 8px; font-weight: 600; line-height: 1.4; width: 100%;
+}
+.transport-tag { background-color: #eff6ff; color: #3b82f6; border: 1px solid #dbeafe; }
+.alert-tag { background: linear-gradient(to right, #fff7ed, #fffbeb); color: #c2410c; font-weight: 700; border: 1px solid #fed7aa; box-shadow: 0 2px 4px rgba(234, 88, 12, 0.05); }
+.transport-tag i, .alert-tag i { margin-right: 4px; width: 14px; text-align: center; }
 
-/* --- Day Tabs / Calendar Bar --- */
+/* --- Day Tabs --- */
 .day-scroll { display: flex; overflow-x: auto; gap: 0.75rem; padding: 0.5rem 0.25rem 1rem 0.25rem; scrollbar-width: none; }
 .day-scroll::-webkit-scrollbar { display: none; }
-.day-tab { flex: 0 0 auto; min-width: 68px; height: 76px; background: rgba(255, 255, 255, 0.9); border-radius: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s ease; border: 1px solid transparent; }
-.day-tab.active { background: #2563eb; color: white; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3); transform: translateY(-2px); border: 1px solid rgba(255,255,255,0.2); }
+.day-tab {
+  flex: 0 0 auto; min-width: 68px; height: 76px; background: rgba(255, 255, 255, 0.9); 
+  border-radius: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s ease; border: 1px solid transparent; cursor: pointer;
+}
 
 /* --- Flight UI --- */
 .flight-card-minimal { background: rgba(255, 255, 255, 0.95); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
@@ -98,423 +103,596 @@ body {
 .flight-body { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .flight-time { font-size: 1.75rem; font-weight: 800; color: #0f172a; line-height: 1; }
 .flight-city { font-size: 0.85rem; font-weight: 600; color: #64748b; margin-top: 4px; }
-.flight-route { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 1rem; position: relative; }
+.flight-route { flex: 1; display: flex; align-items: center; padding: 0 1rem; position: relative; flex-direction: column; }
 .route-line { width: 100%; height: 2px; background: #e2e8f0; position: relative; }
 .route-plane { position: absolute; top: -6px; left: 50%; transform: translateX(-50%); color: #2563eb; background: #fff; padding: 0 6px; font-size: 0.8rem; }
 
 /* --- Bottom Nav --- */
 .bottom-nav-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 0 1rem 1.5rem 1rem; z-index: 50; pointer-events: none; }
-.bottom-nav { pointer-events: auto; display: flex; justify-content: space-between; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 2rem; padding: 0.5rem 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 400px; margin: 0 auto; }
-.nav-btn { display: flex; flex-direction: column; align-items: center; background: none; border: none; color: #94a3b8; font-size: 0.7rem; font-weight: 600; padding: 0.5rem; gap: 4px; transition: 0.3s; }
-.nav-btn.active { color: var(--primary); }
+.bottom-nav {
+  pointer-events: auto; display: flex; justify-content: space-between;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); border-radius: 2rem; padding: 0.5rem 1.5rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 400px; margin: 0 auto;
+}
+.nav-btn {
+  display: flex; flex-direction: column; align-items: center; cursor: pointer;
+  background: none; border: none; color: #94a3b8; font-size: 0.7rem; font-weight: 600; padding: 0.5rem; gap: 4px; transition: 0.3s;
+}
 .nav-btn i { font-size: 1.25rem; margin-bottom: 2px; }
 
-/* --- Animations --- */
-.fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; }
-.list-enter-active, .list-leave-active { transition: all 0.3s ease; }
-.list-enter-from, .list-leave-to { opacity: 0; transform: translateX(20px); }
+/* =========================================
+   PURE CSS LOGIC FOR TABS
+   ========================================= */
+.css-tab-input { display: none; }
+.tab-content { display: none; animation: fadeIn 0.3s ease; }
+.day-content { display: none; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Main Navigation Logic */
+#nav-plan:checked ~ .app-wrapper #content-plan,
+#nav-flight:checked ~ .app-wrapper #content-flight,
+#nav-expense:checked ~ .app-wrapper #content-expense,
+#nav-info:checked ~ .app-wrapper #content-info { display: block; }
+
+/* Main Navigation Active Colors */
+#nav-plan:checked ~ .bottom-nav-container .label-plan,
+#nav-flight:checked ~ .bottom-nav-container .label-flight,
+#nav-expense:checked ~ .bottom-nav-container .label-expense,
+#nav-info:checked ~ .bottom-nav-container .label-info { color: var(--primary); }
+
+/* Day Tabs Logic */
+#day-1:checked ~ .app-wrapper #content-plan #day-content-1,
+#day-2:checked ~ .app-wrapper #content-plan #day-content-2,
+#day-3:checked ~ .app-wrapper #content-plan #day-content-3 { display: block; }
+
+/* Day Tabs Active Colors */
+#day-1:checked ~ .app-wrapper #content-plan .day-tab-1,
+#day-2:checked ~ .app-wrapper #content-plan .day-tab-2,
+#day-3:checked ~ .app-wrapper #content-plan .day-tab-3 {
+  background: #2563eb; color: white;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
 </style>
 </head>
 
 <body>
-<div id="app">
+  <!-- 背景層 -->
   <div class="app-bg"></div>
   <div class="app-overlay"></div>
 
-  <div class="max-w-md mx-auto px-4 pt-6 pb-32 relative z-10">
+  <!-- 純 CSS 狀態控制 (Radio Buttons) -->
+  <input type="radio" name="main-nav" id="nav-plan" class="css-tab-input" checked>
+  <input type="radio" name="main-nav" id="nav-flight" class="css-tab-input">
+  <input type="radio" name="main-nav" id="nav-expense" class="css-tab-input">
+  <input type="radio" name="main-nav" id="nav-info" class="css-tab-input">
+
+  <input type="radio" name="day-nav" id="day-1" class="css-tab-input" checked>
+  <input type="radio" name="day-nav" id="day-2" class="css-tab-input">
+  <input type="radio" name="day-nav" id="day-3" class="css-tab-input">
+
+  <!-- 內容包裹層 -->
+  <div class="app-wrapper max-w-md mx-auto px-4 pt-6 pb-32 relative z-10">
     
-    <!-- Header -->
+    <!-- 頂部 Header -->
     <header class="flex justify-between items-start mb-6">
       <div class="drop-shadow-md pt-1">
-        <h1 class="text-xl font-black text-slate-900 tracking-tight leading-tight" style="text-shadow: 0 2px 10px rgba(255,255,255,0.9);">Kaohsiung<br>Weekend Trip</h1>
+        <h1 class="text-xl font-black text-slate-900 tracking-tight leading-tight" style="text-shadow: 0 2px 4px rgba(255,255,255,0.8);">Kaohsiung<br>Weekend Trip</h1>
       </div>
-      
-      <!-- Weather Module -->
+      <!-- 靜態天氣模組 -->
       <div class="flex flex-col gap-2">
-        <div class="flex items-center justify-end gap-2 text-slate-800 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm w-28 border border-white/50">
+        <div class="flex items-center justify-end gap-2 text-slate-800 bg-white/80 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-sm w-28">
           <div class="text-right flex-1">
             <div class="text-[10px] font-bold text-slate-500">KHH</div>
-            <div class="font-bold text-sm leading-none">{{ weatherKhh.temp }}°C</div>
+            <div class="font-bold text-sm leading-none">26°C</div>
           </div>
-          <i :class="[weatherKhh.icon, 'text-lg text-rose-500 w-5 text-center']"></i>
+          <i class="fa-solid fa-sun text-lg text-orange-500 w-5 text-center"></i>
         </div>
       </div>
     </header>
 
-    <transition name="fade" mode="out-in">
+    <!-- ==============================================
+         1. 📅 規劃與行程 (PLAN)
+         ============================================== -->
+    <section id="content-plan" class="tab-content">
+      <!-- 倒數日期與日期區間 -->
+      <div class="glass-card !py-3 !px-4 mb-4 flex items-center gap-3">
+        <div class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-hourglass-half text-sm"></i>
+        </div>
+        <div class="text-sm font-bold text-slate-800">Trip Dates: 11 Dec - 13 Dec, 2026</div>
+      </div>
+
+      <!-- 出發提醒 -->
+      <div class="glass-card mb-4 !border-red-200 !bg-red-50/90">
+        <h3 class="text-sm font-bold text-red-600 mb-2 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-2"></i> 出發前必做提醒！</h3>
+        <ul class="text-sm text-red-900 font-bold space-y-1 ml-6 list-disc">
+            <li>提前申請及列印入台證</li>
+            <li>兌換台幣現金</li>
+            <li>購買及開通台灣 eSIM</li>
+        </ul>
+      </div>
+
+      <!-- 靜態日曆 Tabs -->
+      <div class="day-scroll">
+        <label for="day-1" class="day-tab day-tab-1">
+          <div class="text-[10px] font-black tracking-wider opacity-70">FRI</div>
+          <div class="text-xl font-black leading-none my-0.5">11</div>
+          <div class="text-[9px] opacity-80 uppercase">Day 1</div>
+        </label>
+        <label for="day-2" class="day-tab day-tab-2">
+          <div class="text-[10px] font-black tracking-wider opacity-70">SAT</div>
+          <div class="text-xl font-black leading-none my-0.5">12</div>
+          <div class="text-[9px] opacity-80 uppercase">Day 2</div>
+        </label>
+        <label for="day-3" class="day-tab day-tab-3">
+          <div class="text-[10px] font-black tracking-wider opacity-70">SUN</div>
+          <div class="text-xl font-black leading-none my-0.5">13</div>
+          <div class="text-[9px] opacity-80 uppercase">Day 3</div>
+        </label>
+      </div>
+
+      <!-- Day 1 Content -->
+      <div id="day-content-1" class="day-content glass-card mt-2">
+        <div class="flex justify-between items-end mb-6 border-b border-slate-200 pb-3">
+          <div><h2 class="text-lg font-bold text-slate-900 flex items-center">Kaohsiung<span class="ml-2 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Dec 11</span></h2></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot walk"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">13:50</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-person-walking-luggage text-emerald-500 mr-1 text-xs"></i>抵達小港機場 ➔ 嬉月地景酒店</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-emerald-50/90 border-emerald-100 text-slate-700 font-medium">辦理入住手續，放好行李準備出發。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運:</span> 紅線(小港R4➔美麗島R10)轉橘線➔鹽埕埔站O2。車程約20分，出站走4分。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot arch"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">15:30</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-landmark text-purple-500 mr-1 text-xs"></i>嬉月 ➔ 一沐日 ➔ 元啡驢派</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-purple-50/90 border-purple-100 text-slate-700 font-medium">務必！一定要去元啡驢派！順路買一杯一沐日草仔粿奶茶。</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 嬉月走3分到一沐日，再走4分到元啡驢派。</div>
+              <div class="alert-tag"><i class="fa-solid fa-star"></i> 必去：元啡驢派！</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot alert"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">16:30</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-bell text-orange-500 mr-1 text-xs"></i>舊三和銀行 / 貿易商大樓 ➔ 微熱山丘</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-orange-50/90 border-orange-100 text-orange-800 font-bold">逛哈瑪星歷史建築，然後去駁二。一定要記得買微熱山丘！</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 走6分到舊三和銀行，再走8分到微熱山丘(駁二門市)。</div>
+              <div class="alert-tag"><i class="fa-solid fa-gift"></i> 必買：微熱山丘！</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot arch"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">17:30</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-landmark text-purple-500 mr-1 text-xs"></i>前往 衛武營</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-purple-50/90 border-purple-100 text-slate-700 font-medium">參觀巨大的鋼鐵建築與榕樹廣場。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運:</span> 從微熱走8分到鹽埕埔，搭橘線(O2➔O10衛武營站)約12分。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">19:30</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>衛武營 ➔ 六合夜市 ➔ 春蘭割包</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">逛夜市吃小吃，順路外帶割包。一定要記得去超商買台啤18天生啤！</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 橘線回美麗島(O10➔O5)約8分。走2分到夜市，走7分到春蘭割包。</div>
+              <div class="alert-tag"><i class="fa-solid fa-beer-mug-empty"></i> 必買：台啤18天生啤！</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot night"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span class="text-sm font-black text-blue-600 font-mono">21:30</span>
+                <span class="text-base font-bold text-slate-900"><i class="fa-solid fa-moon text-blue-800 mr-1 text-xs"></i>返回 嬉月地景酒店</span>
+              </div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-blue-50/90 border-blue-100 text-slate-700 font-medium">結束第一天充實的行程。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運:</span> 美麗島搭橘線至鹽埕埔(O5➔O2)約3分，走4分回飯店。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 2 Content -->
+      <div id="day-content-2" class="day-content glass-card mt-2">
+        <div class="flex justify-between items-end mb-6 border-b border-slate-200 pb-3">
+          <div><h2 class="text-lg font-bold text-slate-900 flex items-center">Kaohsiung<span class="ml-2 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Dec 12</span></h2></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">11:00</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>嬉月 ➔ 大ㄎㄡ米粉湯</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">60年米粉伯限定早餐。</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 約6至8分鐘。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot walk"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">12:15</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-person-walking-luggage text-emerald-500 mr-1 text-xs"></i>前往 鼓山輪渡站</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-emerald-50/90 border-emerald-100 text-slate-700 font-medium">準備搭船前往旗津。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 走5分到鹽埕埔，搭橘線至哈瑪星約2分，出站走6分到輪渡站。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot ferry"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">12:30</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-ship text-sky-500 mr-1 text-xs"></i>搭乘旗津渡輪</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-sky-50/90 border-sky-100 text-slate-700 font-medium">欣賞港灣風光。</span>
+              <div class="transport-tag"><span class="text-slate-500">渡輪:</span> 航程約 5 至 8 分鐘。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot walk"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">13:00</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-person-walking-luggage text-emerald-500 mr-1 text-xs"></i>旗津島內漫步</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-emerald-50/90 border-emerald-100 text-slate-700 font-medium">高雄燈塔 ➔ 星空隧道 ➔ 彩虹教堂 / 斗六冰城</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 渡輪站走12分至燈塔，再走8分至星空隧道，15-20分至教堂。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot relax"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">15:30</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-spa text-pink-500 mr-1 text-xs"></i>返回 鹽埕區 ➔ 離好珈琲</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-pink-50/90 border-pink-100 text-slate-700 font-medium">喝杯自家烘焙咖啡休息一下。</span>
+              <div class="transport-tag"><span class="text-slate-500">渡輪+步行:</span> 船程8分，回鼓山直接走12分到離好珈琲。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot night"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">16:30</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-moon text-blue-800 mr-1 text-xs"></i>返回 嬉月地景酒店</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-blue-50/90 border-blue-100 text-slate-700 font-medium">梳洗換裝準備晚宴。</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 離好珈琲走4分鐘回飯店。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">17:00</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>出席晚宴 ➔ 鳳邑開漳聖王廟</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">地址：台灣高雄市鳳山區鎮西里忠義街132號。</span>
+              <div class="transport-tag"><span class="text-slate-500">交通:</span> 從鹽埕埔站搭捷運橘線直達「鳳山站」(O12)，車程約20分，出站走10分。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 3 Content -->
+      <div id="day-content-3" class="day-content glass-card mt-2">
+        <div class="flex justify-between items-end mb-6 border-b border-slate-200 pb-3">
+          <div><h2 class="text-lg font-bold text-slate-900 flex items-center">Kaohsiung<span class="ml-2 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Dec 13</span></h2></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">11:00</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>嬉月 ➔ 興隆居 (前金店)</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">吃招牌爆汁湯包與燒餅油條。</span>
+              <div class="transport-tag"><span class="text-slate-500">步行:</span> 沿五福四路/成功一路，約10至12分鐘。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot arch"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">12:30</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-landmark text-purple-500 mr-1 text-xs"></i>興隆居 ➔ 市圖總館</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-purple-50/90 border-purple-100 text-slate-700 font-medium">欣賞全球首座懸吊式綠建築。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 前金站➔三多商圈站車程5分，出站走8分。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">14:15</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>市圖總館 ➔ 小亨利牛肉麵</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">文化中心商圈吃美味牛肉麵。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 捷運含轉乘12分，出站走6分。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot food"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">15:00</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>小亨利牛肉麵 ➔ 春霞粉圓冰</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-amber-50/90 border-amber-100 text-slate-700 font-medium">吃古早味粉圓冰。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 橘線車程6分，出站走8分。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot walk"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">15:45</span><span class="text-base font-bold text-slate-900"><i class="fa-solid fa-person-walking-luggage text-emerald-500 mr-1 text-xs"></i>鹽埕區採買手信 ➔ 嬉月取行李</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-emerald-50/90 border-emerald-100 text-slate-700 font-medium">準備前往機場。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運+步行:</span> 捷運約2分，出站走4分回飯店。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">16:30</span><span class="text-base font-bold text-slate-900">前往 小港機場</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-white/70 border-slate-200 text-slate-700">搭乘捷運直達機場。</span>
+              <div class="transport-tag"><span class="text-slate-500">捷運:</span> 橘線轉紅線。總計約25-30分鐘。</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="flex flex-col">
+              <div class="flex items-baseline gap-2 mb-1"><span class="text-sm font-black text-blue-600 font-mono">19:05</span><span class="text-base font-bold text-slate-900">航班 NX659 起飛</span></div>
+              <span class="text-sm leading-relaxed p-2 rounded-lg border mb-1 block bg-white/70 border-slate-200 text-slate-700">平安返回澳門。</span>
+              <div class="transport-tag"><span class="text-slate-500">航班:</span> 預計 20:30 抵達 MFM。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         2. ✈ 航班 (FLIGHT)
+         ============================================== -->
+    <section id="content-flight" class="tab-content">
+      <h2 class="text-xl font-bold text-slate-900 mb-4 px-1 drop-shadow-sm" style="text-shadow: 0 1px 2px rgba(255,255,255,0.8);">My Flights</h2>
       
-      <!-- 📅 Itinerary (PLAN) -->
-      <section v-if="tab==='plan'" key="plan">
-        
-        <!-- 倒數計時器 (修復版) -->
-        <div class="glass-card !py-3 !px-4 mb-4 flex justify-between items-center">
-          <div class="flex items-center gap-3">
-            <div class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center">
-              <i class="fa-solid fa-hourglass-half text-sm"></i>
+      <div class="flight-card-minimal">
+        <div class="flight-header">
+          <div class="airline-tag"><i class="fa-solid fa-plane-departure"></i> Macau Air NX668</div>
+          <div class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">Dec 11</div>
+        </div>
+        <div class="flight-body">
+          <div>
+            <div class="flight-time">12:25</div>
+            <div class="flight-city">Macau MFM</div>
+          </div>
+          <div class="flight-route">
+            <div class="route-line"><i class="fa-solid fa-plane route-plane"></i></div>
+            <div class="text-[10px] text-slate-500 mt-3">1h 25m</div>
+          </div>
+          <div class="text-right">
+            <div class="flight-time">13:50</div>
+            <div class="flight-city">Kaohsiung KHH</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flight-card-minimal">
+        <div class="flight-header">
+          <div class="airline-tag"><i class="fa-solid fa-plane-arrival"></i> Macau Air NX659</div>
+          <div class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">Dec 13</div>
+        </div>
+        <div class="flight-body">
+          <div>
+            <div class="flight-time">19:05</div>
+            <div class="flight-city">Kaohsiung KHH</div>
+          </div>
+          <div class="flight-route">
+            <div class="route-line"><i class="fa-solid fa-plane route-plane fa-rotate-180"></i></div>
+            <div class="text-[10px] text-slate-500 mt-3">1h 25m</div>
+          </div>
+          <div class="text-right">
+            <div class="flight-time">20:30</div>
+            <div class="flight-city">Macau MFM</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         3. 💰 記帳 (EXPENSE)
+         ============================================== -->
+    <section id="content-expense" class="tab-content">
+      <div class="glass-card bg-gradient-to-r from-blue-600 to-indigo-600 !border-0 text-white mb-4 shadow-lg shadow-blue-200">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="text-xs font-bold opacity-90 mb-1 tracking-wider uppercase">Total Expenses (TWD)</div>
+            <div class="text-3xl font-black tracking-tight">NT$ 850</div>
+          </div>
+          <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+            <i class="fa-solid fa-wallet text-xl"></i>
+          </div>
+        </div>
+        <div class="mt-2 pt-2 border-t border-white/20 text-sm font-bold opacity-95 flex flex-col gap-1">
+          <span>≈ MOP $212.5</span>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h2 class="text-lg font-bold text-slate-900 mb-4">Add Expense</h2>
+        <div class="relative mb-4 flex flex-col">
+          <div class="relative">
+            <span class="absolute left-3 top-4 text-slate-400 font-bold">$</span>
+            <input type="number" inputmode="decimal" placeholder="0" class="w-full bg-white border border-slate-200 rounded-xl py-4 pl-8 pr-24 text-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+        </div>
+        <div class="grid grid-cols-5 gap-2 mb-4">
+          <button type="button" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border bg-blue-600 text-white border-blue-600 shadow-md"><span class="text-lg mb-1">🍜</span>Dining</button>
+          <button type="button" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border bg-white/80 text-slate-600 border-slate-200"><span class="text-lg mb-1">🚕</span>Transport</button>
+          <button type="button" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border bg-white/80 text-slate-600 border-slate-200"><span class="text-lg mb-1">🏨</span>Hotel</button>
+          <button type="button" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border bg-white/80 text-slate-600 border-slate-200"><span class="text-lg mb-1">🎁</span>Shopping</button>
+          <button type="button" class="flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border bg-white/80 text-slate-600 border-slate-200"><span class="text-lg mb-1">🎫</span>Entertain</button>
+        </div>
+        <!-- 支付方式：Cash, Credit Card, 支付寶, MPay -->
+        <div class="grid grid-cols-4 gap-2 mb-4">
+          <button type="button" class="py-2 px-2 rounded-lg text-xs font-bold border transition-colors border-blue-600 bg-blue-50 text-blue-700 text-center">Cash</button>
+          <button type="button" class="py-2 px-2 rounded-lg text-xs font-bold border transition-colors border-slate-200 bg-white/80 text-slate-600 text-center">Credit Card</button>
+          <button type="button" class="py-2 px-2 rounded-lg text-xs font-bold border transition-colors border-slate-200 bg-white/80 text-slate-600 text-center">支付寶</button>
+          <button type="button" class="py-2 px-2 rounded-lg text-xs font-bold border transition-colors border-slate-200 bg-white/80 text-slate-600 text-center">MPay</button>
+        </div>
+        <div class="flex gap-2">
+          <input placeholder="Item description" class="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none">
+          <button type="button" class="bg-blue-600 text-white rounded-xl px-5 font-bold shadow-lg shadow-blue-200 active:scale-95 transition-transform"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+
+      <div class="pb-4">
+        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 px-1 bg-white/60 inline-block rounded">Records</h3>
+        <div class="space-y-2">
+          <div class="bg-white/95 border border-slate-100 rounded-xl p-3 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-lg">🍜</div>
+              <div><div class="font-bold text-slate-900 text-sm">一沐日飲料</div><div class="text-xs text-slate-500">支付寶</div></div>
             </div>
-            <div class="text-sm font-bold text-slate-800">{{ countText }}</div>
+            <div class="flex items-center gap-3">
+              <div class="text-right flex flex-col justify-center">
+                <div class="font-bold text-slate-900">NT$130</div><div class="text-[10px] text-blue-600 font-bold leading-tight">MOP $32.5</div>
+              </div>
+              <button type="button" class="w-8 h-8 flex items-center justify-center text-slate-400"><i class="fa-solid fa-trash-can text-sm"></i></button>
+            </div>
           </div>
-          <!-- 副標題日期 -->
-          <div class="text-xs font-bold text-slate-400 bg-slate-100/50 px-2 py-1 rounded-lg">
-            Dec 11 - 13, 2026
-          </div>
-        </div>
-
-        <!-- Pre-trip Alerts (琥珀金) -->
-        <div class="glass-card mb-4 !border-l-4 !border-l-amber-500 relative overflow-hidden">
-            <div class="absolute right-[-10px] top-[-10px] text-5xl text-amber-500/10"><i class="fa-solid fa-bell"></i></div>
-            <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i> 出發前必做提醒</h3>
-            <ul class="text-sm text-slate-600 font-bold space-y-1 ml-6 list-disc relative z-10">
-                <li>提前申請及列印入台證</li>
-                <li>兌換台幣現金</li>
-                <li>購買及開通台灣 eSIM</li>
-            </ul>
-        </div>
-
-        <!-- Day Tabs -->
-        <div class="day-scroll">
-          <div v-for="d in days" :key="d.date" @click="selDay=d"
-               :class="['day-tab', selDay.date===d.date?'active':'']">
-            <div class="text-[10px] font-black tracking-wider opacity-70">{{ d.weekDay }}</div>
-            <div class="text-xl font-black leading-none my-0.5">{{ d.display }}</div>
-            <div class="text-[9px] opacity-80 uppercase">{{ d.day }}</div>
+          <div class="bg-white/95 border border-slate-100 rounded-xl p-3 flex justify-between items-center shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-lg">🚕</div>
+              <div><div class="font-bold text-slate-900 text-sm">捷運儲值</div><div class="text-xs text-slate-500">MPay</div></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="text-right flex flex-col justify-center">
+                <div class="font-bold text-slate-900">NT$720</div><div class="text-[10px] text-blue-600 font-bold leading-tight">MOP $180.0</div>
+              </div>
+              <button type="button" class="w-8 h-8 flex items-center justify-center text-slate-400"><i class="fa-solid fa-trash-can text-sm"></i></button>
+            </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="glass-card mt-2">
-          <div class="flex justify-between items-end mb-6 border-b border-slate-200 pb-3">
+    <!-- ==============================================
+         4. ℹ 資訊與景點介紹 (INFO)
+         ============================================== -->
+    <section id="content-info" class="tab-content">
+      <!-- 住宿資訊 -->
+      <div class="glass-card">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2">Accommodation Info</h2>
+        <div class="bg-white/90 border border-slate-100 p-4 rounded-xl shadow-sm relative overflow-hidden">
+          <div class="absolute right-0 top-0 p-3 opacity-5 text-6xl pointer-events-none"><i class="fa-solid fa-bed"></i></div>
+          <div class="relative z-10">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="font-bold text-lg text-slate-900">嬉月地景酒店 (Lunaris)</h3>
+              <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-1 rounded-full">Dec 11 - Dec 13</span>
+            </div>
+            <div class="text-sm text-slate-700 mb-1">
+               <i class="fa-solid fa-location-dot mr-2 text-slate-400"></i>鹽埕區五福四路 148 號
+            </div>
+            <div class="text-xs text-emerald-600 pl-5 font-bold"><i class="fa-solid fa-check"></i> 近捷運鹽埕埔站</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 景點與特色指南 (Highlights) - 包含高雄、總圖、衛武營、哈瑪星、駁二、六合夜市、旗津、聖王廟、流水宴 -->
+      <div class="glass-card">
+        <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2">Kaohsiung Highlights & Events</h2>
+        
+        <div class="space-y-4">
+          <!-- 高雄城市概況 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1508873696983-2df5c920ac1c?q=80&w=200&auto=format&fit=crop" alt="高雄城市" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
             <div>
-              <h2 class="text-lg font-bold text-slate-900 flex items-center">
-                {{ selDay.city }}
-                <span class="ml-2 text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">{{ selDay.date }}</span>
-              </h2>
+              <h3 class="font-bold text-sm text-slate-900">高雄市 (Kaohsiung)</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">南台灣最具代表性的港都，融合現代海洋美學與深厚歷史底蘊。</p>
             </div>
           </div>
-          
-          <div class="timeline">
-            <div v-for="p in selDay.plans" :key="p.time" class="timeline-item">
-              <!-- Dot Logic -->
-              <div :class="['timeline-dot', 
-                p.isFood ? 'food' : '', 
-                p.isArch ? 'arch' : '', 
-                p.isWalk ? 'walk' : '',
-                p.isFerry ? 'ferry' : '',
-                p.isNight ? 'night' : '',
-                p.isRelax ? 'relax' : '',
-                p.isAlert ? 'alert' : ''
-              ]"></div>
-              
-              <div class="flex flex-col">
-                <div class="flex items-baseline gap-2 mb-1">
-                  <span class="text-sm font-black text-blue-600 font-mono">{{ p.time }}</span>
-                  <span class="text-base font-bold text-slate-900 leading-tight">
-                    <i v-if="p.isFood" class="fa-solid fa-utensils text-amber-500 mr-1 text-xs"></i>
-                    <i v-if="p.isArch" class="fa-solid fa-landmark text-purple-500 mr-1 text-xs"></i>
-                    <i v-if="p.isWalk" class="fa-solid fa-person-walking-luggage text-emerald-500 mr-1 text-xs"></i>
-                    <i v-if="p.isFerry" class="fa-solid fa-ship text-sky-500 mr-1 text-xs"></i>
-                    <i v-if="p.isNight" class="fa-solid fa-moon text-blue-800 mr-1 text-xs"></i>
-                    <i v-if="p.isRelax" class="fa-solid fa-spa text-pink-500 mr-1 text-xs"></i>
-                    <i v-if="p.isAlert" class="fa-solid fa-star text-amber-500 mr-1 text-xs"></i>
-                    {{ p.title }}
-                  </span>
-                </div>
-                
-                <!-- Notes -->
-                <span :class="['text-sm leading-relaxed p-2 rounded-lg border mb-1 block', 
-                  p.isFood ? 'bg-amber-50/90 border-amber-100 text-slate-700 font-medium' : 
-                  p.isArch ? 'bg-purple-50/90 border-purple-100 text-slate-700 font-medium' : 
-                  p.isWalk ? 'bg-emerald-50/90 border-emerald-100 text-slate-700 font-medium' : 
-                  p.isFerry ? 'bg-sky-50/90 border-sky-100 text-slate-700 font-medium' : 
-                  p.isNight ? 'bg-blue-50/90 border-blue-100 text-slate-700 font-medium' : 
-                  p.isAlert ? 'bg-amber-50/80 border-amber-200 text-amber-800 font-medium' :
-                  'bg-white/70 border-slate-200 text-slate-700']">
-                  {{ p.note }}
-                </span>
 
-                <div v-if="p.transport" class="transport-tag">
-                  <span v-html="p.transport"></span>
-                </div>
-                <div v-if="p.alertTag" class="alert-tag">
-                  <span v-html="p.alertTag"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ✈ Flights (FLIGHT) -->
-      <section v-if="tab==='flight'" key="flight">
-        <h2 class="text-xl font-bold text-slate-900 mb-4 px-1 drop-shadow-sm" style="text-shadow: 0 1px 2px rgba(255,255,255,0.8);">My Flights</h2>
-        
-        <div class="flight-card-minimal">
-          <div class="flight-header">
-            <div class="airline-tag"><i class="fa-solid fa-plane-departure"></i> Macau Air NX668</div>
-            <div class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">Dec 11</div>
-          </div>
-          <div class="flight-body">
-            <div><div class="flight-time">12:25</div><div class="flight-city">Macau MFM</div></div>
-            <div class="flight-route"><div class="route-line"><i class="fa-solid fa-plane route-plane"></i></div><div class="text-[10px] text-slate-500 mt-3">1h 25m</div></div>
-            <div class="text-right"><div class="flight-time">13:50</div><div class="flight-city">Kaohsiung KHH</div></div>
-          </div>
-        </div>
-
-        <div class="flight-card-minimal">
-          <div class="flight-header">
-            <div class="airline-tag"><i class="fa-solid fa-plane-arrival"></i> Macau Air NX659</div>
-            <div class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">Dec 13</div>
-          </div>
-          <div class="flight-body">
-            <div><div class="flight-time">19:05</div><div class="flight-city">Kaohsiung KHH</div></div>
-            <div class="flight-route"><div class="route-line"><i class="fa-solid fa-plane route-plane fa-rotate-180"></i></div><div class="text-[10px] text-slate-500 mt-3">1h 25m</div></div>
-            <div class="text-right"><div class="flight-time">20:30</div><div class="flight-city">Macau MFM</div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 💰 Expenses (EXPENSE) -->
-      <section v-if="tab==='expense'" key="expense">
-        <div class="glass-card bg-gradient-to-r from-blue-600 to-indigo-600 !border-0 text-white mb-4 shadow-lg shadow-blue-200">
-          <div class="flex justify-between items-start">
+          <!-- 高雄市立圖書館總館 (修正連結) -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=200&auto=format&fit=crop" alt="高雄總圖" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
             <div>
-              <div class="text-xs font-bold opacity-90 mb-1 tracking-wider uppercase">Total Expenses (TWD)</div>
-              <div class="text-3xl font-black tracking-tight">NT$ {{ totalExpense.toFixed(0) }}</div>
-            </div>
-            <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-wallet text-xl"></i></div>
-          </div>
-          <div class="mt-2 pt-2 border-t border-white/20 text-sm font-bold opacity-95 flex flex-col gap-1">
-            <span>≈ MOP ${{ (totalExpense * rateMop).toFixed(1) }}</span>
-          </div>
-        </div>
-
-        <div class="glass-card">
-          <h2 class="text-lg font-bold text-slate-900 mb-4">Add Expense</h2>
-          <div class="relative mb-4 flex flex-col">
-            <div class="relative">
-              <span class="absolute left-3 top-4 text-slate-400 font-bold">$</span>
-              <input v-model="e.amount" type="number" inputmode="decimal" placeholder="0" 
-                     class="w-full bg-white border border-slate-200 rounded-xl py-4 pl-8 pr-24 text-2xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none">
-              <div class="absolute right-3 top-4 flex flex-col gap-1 items-end">
-                <div class="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
-                  ≈ MOP ${{ (Number(e.amount)*rateMop || 0).toFixed(1) }}
-                </div>
-              </div>
+              <h3 class="font-bold text-sm text-slate-900">高雄市立圖書館總館</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">全球首座懸吊式綠建築，頂樓設有空中花園，俯瞰港都美景的最佳去處。</p>
             </div>
           </div>
-          <div class="grid grid-cols-5 gap-2 mb-4">
-            <button v-for="c in cats" :key="c.label" @click="e.cat=c.label"
-              :class="['flex flex-col items-center justify-center p-2 rounded-xl transition-all text-xs font-medium border', 
-                       e.cat===c.label ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-white/80 text-slate-600 border-slate-200']">
-              <span class="text-lg mb-1">{{ c.icon }}</span>{{ c.label }}
-            </button>
-          </div>
-          <div class="flex gap-2 mb-4">
-            <button v-for="m in pays" :key="m" @click="e.method=m"
-              :class="['flex-1 py-2 px-3 rounded-lg text-xs font-bold border transition-colors', 
-                       e.method===m ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white/80 text-slate-600']">
-              {{ m }}
-            </button>
-          </div>
-          <div class="flex gap-2">
-            <input v-model="e.item" placeholder="Item description" class="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none">
-            <button @click="addRec" class="bg-blue-600 text-white rounded-xl px-5 font-bold shadow-lg shadow-blue-200 active:scale-95 transition-transform"><i class="fa-solid fa-plus"></i></button>
-          </div>
-        </div>
 
-        <div v-if="records.length" class="pb-4">
-          <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 px-1 bg-white/60 inline-block rounded">Records</h3>
-          <transition-group name="list" tag="div" class="space-y-2">
-            <div v-for="r in records" :key="r.id" class="bg-white/95 border border-slate-100 rounded-xl p-3 flex justify-between items-center shadow-sm group relative overflow-hidden">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-lg">{{ catIcon(r.cat) }}</div>
-                <div><div class="font-bold text-slate-900 text-sm">{{ r.item }}</div><div class="text-xs text-slate-500">{{ r.method }}</div></div>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="text-right flex flex-col justify-center">
-                  <div class="font-bold text-slate-900">NT${{ r.amount }}</div>
-                  <div class="text-[10px] text-blue-600 font-bold leading-tight">MOP ${{ (r.amount*rateMop).toFixed(1) }}</div>
-                </div>
-                <button type="button" @click="delRec(r.id)" class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors active:bg-red-100"><i class="fa-solid fa-trash-can text-sm"></i></button>
-              </div>
-            </div>
-          </transition-group>
-        </div>
-      </section>
-
-      <!-- ℹ Info & Highlights (INFO) -->
-      <section v-if="tab==='info'" key="info">
-        
-        <!-- 住宿資訊 -->
-        <div class="glass-card mb-4">
-          <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2">Accommodation Info</h2>
-          <div class="bg-white/95 border border-slate-100 p-4 rounded-xl shadow-sm relative overflow-hidden">
-            <div class="absolute right-0 top-0 p-3 opacity-5 text-6xl pointer-events-none"><i class="fa-solid fa-bed"></i></div>
-            <div class="relative z-10">
-              <div class="flex justify-between items-center mb-2">
-                <h3 class="font-bold text-lg text-slate-900">嬉月地景酒店 (Lunaris)</h3>
-                <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-1 rounded-full">Dec 11 - Dec 13</span>
-              </div>
-              <div class="text-sm text-slate-700 mb-1">
-                 <i class="fa-solid fa-location-dot mr-2 text-slate-400"></i>鹽埕區五福四路 148 號
-              </div>
-              <div class="text-xs text-emerald-600 pl-5 font-bold"><i class="fa-solid fa-check"></i> 近捷運鹽埕埔站</div>
+          <!-- 衛武營國家藝術文化中心 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?q=80&w=200&auto=format&fit=crop" alt="衛武營" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">衛武營國家藝術文化中心</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">世界最大單一屋頂劇場，流線型外觀與榕樹廣場充滿前衛藝術感。</p>
             </div>
           </div>
-        </div>
 
-        <!-- 高雄景點文化介紹 (修復破圖、加入指定介紹) -->
-        <div class="glass-card">
-          <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2">Kaohsiung Highlights</h2>
-          <div class="space-y-3">
-            <div v-for="h in highlights" :key="h.title" class="flex gap-3 items-start bg-white/95 p-3 rounded-xl border border-slate-100 shadow-sm">
-              <img :src="h.img" class="w-20 h-20 object-cover rounded-lg shadow-sm shrink-0 bg-slate-100" :alt="h.title" />
-              <div>
-                <h4 class="font-bold text-slate-800 text-sm mb-1">{{ h.title }}</h4>
-                <p class="text-xs text-slate-600 leading-relaxed">{{ h.desc }}</p>
-              </div>
+          <!-- 哈瑪星歷史街區 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=200&auto=format&fit=crop" alt="哈瑪星" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">哈瑪星歷史街區</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">日治時期舊三和銀行、貿易商大樓與百年鐵道交織而成的懷舊老街。</p>
             </div>
           </div>
+
+          <!-- 駁二藝術特區 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=200&auto=format&fit=crop" alt="駁二" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">駁二藝術特區</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">由舊倉庫改造成的藝文烏托邦，充滿巨型塗鴉、文創小店與海港風情。</p>
+            </div>
+          </div>
+
+          <!-- 六合夜市 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=200&auto=format&fit=crop" alt="六合夜市" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">六合夜市</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">高雄最具代表性的老牌夜市，匯聚各式道地小吃與消夜美食。</p>
+            </div>
+          </div>
+
+          <!-- 旗津 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200&auto=format&fit=crop" alt="旗津" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">旗津風景區</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">搭乘渡輪即可抵達的海島，擁有百年燈塔、星空隧道與絕美海景。</p>
+            </div>
+          </div>
+
+          <!-- 聖王廟 & 流水宴 -->
+          <div class="flex gap-3 items-center bg-white/90 border border-slate-100 p-3 rounded-xl shadow-sm">
+            <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=200&auto=format&fit=crop" alt="聖王廟與流水宴" class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+            <div>
+              <h3 class="font-bold text-sm text-slate-900">鳳邑開漳聖王廟 & 流水宴</h3>
+              <p class="text-xs text-slate-600 mt-1 leading-relaxed">歷史悠久的信仰中心，並在此參與極具台灣傳統人情味的盛大喜慶「流水宴」。</p>
+            </div>
+          </div>
+
         </div>
+      </div>
+    </section>
 
-      </section>
-
-    </transition>
   </div>
 
   <!-- 📱 Bottom Navigation -->
   <div class="bottom-nav-container">
     <nav class="bottom-nav">
-      <button :class="['nav-btn', tab==='plan'?'active':'']" @click="tab='plan'">
+      <label for="nav-plan" class="nav-btn label-plan">
         <i class="fa-solid fa-calendar-day"></i><span>Itinerary</span>
-      </button>
-      <button :class="['nav-btn', tab==='flight'?'active':'']" @click="tab='flight'">
+      </label>
+      <label for="nav-flight" class="nav-btn label-flight">
         <i class="fa-solid fa-plane"></i><span>Flights</span>
-      </button>
-      <button :class="['nav-btn', tab==='expense'?'active':'']" @click="tab='expense'">
+      </label>
+      <label for="nav-expense" class="nav-btn label-expense">
         <i class="fa-solid fa-receipt"></i><span>Expenses</span>
-      </button>
-      <button :class="['nav-btn', tab==='info'?'active':'']" @click="tab='info'">
+      </label>
+      <label for="nav-info" class="nav-btn label-info">
         <i class="fa-solid fa-circle-info"></i><span>Info</span>
-      </button>
+      </label>
     </nav>
   </div>
-</div>
 
-<script>
-const {createApp,ref,computed,onMounted}=Vue;
-createApp({
- setup(){
-   const tab=ref('plan');
-   
-   // --- Weather (Kaohsiung) ---
-   const weatherKhh=ref({temp:'--',desc:'Loading',icon:'fa-solid fa-spinner fa-spin'});
-   const getWeatherIcon = (code) => {
-      if(code === 0) return 'fa-solid fa-sun text-orange-500';
-      if([1,2,3].includes(code)) return 'fa-solid fa-cloud-sun text-slate-500';
-      if([45,48].includes(code)) return 'fa-solid fa-smog text-slate-400';
-      if([51,53,55,61,63,65].includes(code)) return 'fa-solid fa-cloud-rain text-blue-400';
-      if(code >= 95) return 'fa-solid fa-cloud-bolt text-yellow-500';
-      return 'fa-solid fa-cloud text-slate-400';
-   };
-   const fetchCityWeather = async (lat, long) => {
-      try {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true`);
-        const data = await res.json();
-        return { temp: Math.round(data.current_weather.temperature), icon: getWeatherIcon(data.current_weather.weathercode) };
-      } catch (e) { return { temp: '--', icon:'fa-solid fa-cloud' }; }
-   };
-   onMounted(()=>{ fetchCityWeather(22.6273, 120.3014).then(w => weatherKhh.value = w); });
-
-   // --- Countdown (修復版) ---
-   const countText=computed(()=>{
-     const start = new Date('2026-12-11T00:00:00').getTime();
-     const end = new Date('2026-12-13T23:59:59').getTime();
-     const now = new Date().getTime();
-     
-     if (now < start) {
-         const diff = Math.ceil((start - now) / (1000 * 60 * 60 * 24));
-         return `距離出發還有 ${diff} 天！`;
-     }
-     if (now >= start && now <= end) return `旅程進行中！享受高雄`;
-     return `旅程已圓滿結束`;
-   });
-
-   // --- Itinerary Data ---
-   const days=ref([
-     {day:'Day 1', weekDay:'FRI', display:'11',date:'Dec 11',city:'Kaohsiung',plans:[
-       {time:'13:50',title:'抵達小港機場 ➔ 嬉月地景酒店',note:'辦理入住手續，放好行李準備出發。', isWalk: true, transport:'<span class="text-slate-500">捷運:</span> 紅線(小港R4➔美麗島R10)轉橘線➔鹽埕埔站O2。'},
-       {time:'15:30',title:'嬉月 ➔ 一沐日 ➔ 元啡驢派',note:'務必！一定要去元啡驢派！順路買一杯一沐日草仔粿奶茶。', isAlert: true, isArch: true, alertTag: '<i class="fa-solid fa-star"></i> 必去：元啡驢派！', transport:'<span class="text-slate-500">步行:</span> 嬉月走3分到一沐日，再走4分到元啡驢派。'},
-       {time:'16:30',title:'舊三和銀行 / 貿易商大樓 ➔ 微熱山丘',note:'逛哈瑪星歷史建築，然後去駁二。一定要記得買微熱山丘！', isAlert: true, alertTag: '<i class="fa-solid fa-gift"></i> 必買：微熱山丘！', transport:'<span class="text-slate-500">步行:</span> 走6分到舊三和銀行，再走8分到微熱山丘(駁二門市)。'},
-       {time:'17:30',title:'前往 衛武營',note:'參觀巨大的鋼鐵建築與榕樹廣場。', isArch: true, transport:'<span class="text-slate-500">捷運:</span> 從微熱走8分到鹽埕埔，搭橘線(O2➔O10衛武營站)約12分。'},
-       {time:'19:30',title:'衛武營 ➔ 六合夜市 ➔ 春蘭割包',note:'逛夜市吃小吃，順路外帶割包。一定要記得去超商買台啤18天生啤！', isAlert: true, isFood: true, alertTag: '<i class="fa-solid fa-beer-mug-empty"></i> 必買：台啤18天生啤！', transport:'<span class="text-slate-500">捷運+步行:</span> 橘線回美麗島(O10➔O5)約8分。走2分到夜市，走7分到春蘭割包。'},
-       {time:'21:30',title:'返回 嬉月地景酒店',note:'結束第一天充實的行程。', isNight: true, transport:'<span class="text-slate-500">捷運:</span> 美麗島搭橘線至鹽埕埔(O5➔O2)約3分，走4分回飯店。'}
-     ]},
-     {day:'Day 2', weekDay:'SAT', display:'12',date:'Dec 12',city:'Kaohsiung',plans:[
-       {time:'11:00',title:'嬉月 ➔ 大ㄎㄡ米粉湯',note:'60年米粉伯限定早餐。', isFood: true, transport:'<span class="text-slate-500">步行:</span> 約6至8分鐘。'},
-       {time:'12:15',title:'前往 鼓山輪渡站',note:'準備搭船前往旗津。', isWalk: true, transport:'<span class="text-slate-500">捷運+步行:</span> 走5分到鹽埕埔，搭橘線至哈瑪星(O2➔O1)約2分，出站走6分到輪渡站。'},
-       {time:'12:30',title:'搭乘旗津渡輪',note:'欣賞港灣風光。', isFerry: true, transport:'<span class="text-slate-500">渡輪:</span> 航程約 5 至 8 分鐘。'},
-       {time:'13:00',title:'旗津島內漫步',note:'高雄燈塔 ➔ 星空隧道 ➔ 彩虹教堂 / 斗六冰城', isWalk: true, transport:'<span class="text-slate-500">步行:</span> 渡輪站走12分(上坡)至燈塔，再走8分至星空隧道，15-20分至教堂。'},
-       {time:'15:30',title:'返回 鹽埕區 ➔ 離好珈琲',note:'喝杯自家烘焙咖啡休息一下。', isRelax: true, transport:'<span class="text-slate-500">渡輪+步行:</span> 船程8分，回鼓山輪渡站直接走12分到離好珈琲。'},
-       {time:'16:30',title:'返回 嬉月地景酒店',note:'梳洗換裝準備晚宴。', isNight: true, transport:'<span class="text-slate-500">步行:</span> 離好珈琲走4分鐘回飯店。'},
-       {time:'17:00',title:'出席晚宴 ➔ 鳳邑開漳聖王廟',note:'地址：台灣高雄市鳳山區鎮西里忠義街132號', isFood: true, transport:'<span class="text-slate-500">交通:</span> 從鹽埕埔站搭捷運橘線直達「鳳山站」(O12)，車程約20分，出站步行約10分鐘。'}
-     ]},
-     {day:'Day 3', weekDay:'SUN', display:'13',date:'Dec 13',city:'Kaohsiung',plans:[
-       {time:'11:00',title:'嬉月 ➔ 興隆居 (前金店)',note:'吃招牌爆汁湯包與燒餅油條。', isFood: true, transport:'<span class="text-slate-500">步行:</span> 沿五福四路/成功一路，約10至12分鐘。'},
-       {time:'12:30',title:'興隆居 ➔ 市圖總館',note:'欣賞全球首座懸吊式綠建築。', isArch: true, transport:'<span class="text-slate-500">捷運+步行:</span> 前金站(R10/O5)➔三多商圈站(R8)車程5分，出站走8分。'},
-       {time:'14:15',title:'市圖總館 ➔ 小亨利牛肉麵',note:'文化中心商圈吃美味牛肉麵。', isFood: true, transport:'<span class="text-slate-500">捷運+步行:</span> 捷運(R8➔O7)車程含轉乘12分，出站走6分。'},
-       {time:'15:00',title:'小亨利牛肉麵 ➔ 春霞粉圓冰',note:'吃古早味粉圓冰。', isFood: true, transport:'<span class="text-slate-500">捷運+步行:</span> 橘線(O7➔O4)車程6分，出站走8分。'},
-       {time:'15:45',title:'鹽埕區採買手信 ➔ 嬉月取行李',note:'準備前往機場。', isWalk: true, transport:'<span class="text-slate-500">捷運+步行:</span> 捷運(O4➔O2)約2分，出站走4分回飯店。'},
-       {time:'16:30',title:'前往 小港機場',note:'搭乘捷運直達機場。', transport:'<span class="text-slate-500">捷運:</span> 橘線(O2➔O5)轉紅線(O5➔R4)。總計約25-30分鐘。'},
-       {time:'19:05',title:'航班 NX659 起飛',note:'平安返回澳門。', transport:'<span class="text-slate-500">航班:</span> 預計 20:30 抵達 MFM。'}
-     ]}
-   ]);
-   const selDay=ref(days.value[0]);
-
-   // --- Highlights Data (修復破圖、補齊景點介紹) ---
-   const highlights=ref([
-     { title: '魅力港都：高雄', desc: '南台灣最熱情的城市，擁有豐富的海洋文化、寬闊的街道與溫暖的陽光。', img: 'https://images.unsplash.com/photo-1578586411132-231a49938bfa?auto=format&fit=crop&w=400&q=80' },
-     { title: '高雄市立圖書館總館', desc: '全球首座懸吊式綠建築，頂納景觀空中花園，為高雄極具代表性的文化地標。', img: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80' },
-     { title: '六合夜市', desc: '高雄最具歷史代表性的夜市，以海鮮、傳統小吃聞名，必嚐木瓜牛奶與海產粥。', img: 'https://images.unsplash.com/photo-1542640244-7e672d6cb466?auto=format&fit=crop&w=400&q=80' },
-     { title: '旗津風景區', desc: '搭乘渡輪僅需幾分鐘即可抵達的狹長小島，以黑沙灘、百年燈塔、星空隧道與新鮮海產著稱。', img: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?auto=format&fit=crop&w=400&q=80' },
-     { title: '鳳邑開漳聖王廟', desc: '位於鳳山區的百年在地信仰中心，見證歷史發展，是體驗台灣傳統廟宇文化的絕佳地點。', img: 'https://images.unsplash.com/photo-1587635299441-11d2e8e04bde?auto=format&fit=crop&w=400&q=80' },
-     { title: '台灣辦桌流水宴', desc: '極具人情味的傳統文化，總舖師在路邊搭棚辦桌，菜色豐富霸氣，氣氛熱鬧非凡！', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80' }
-   ]);
-
-   // --- Expenses (TWD to MOP) ---
-   const rateMop=ref(0.25);
-   const e=ref({amount:'',item:'',cat:'Dining',method:'Credit Card'});
-   const records=ref([]);
-   const cats=[{icon:'🍜',label:'Dining'},{icon:'🚕',label:'Transport'},{icon:'🏨',label:'Hotel'},{icon:'🎁',label:'Shopping'},{icon:'🎫',label:'Entertain'}];
-   const pays=['Cash','Credit Card','Apple Pay','Line Pay'];
-   const catIcon=l=>cats.find(c=>c.label===l)?.icon||'🧾';
-   
-   const totalExpense = computed(() => { return records.value.reduce((sum, record) => sum + (Number(record.amount) || 0), 0); });
-   
-   const addRec=()=>{
-     const amt = parseFloat(e.value.amount);
-     if(isNaN(amt) || e.value.amount === '' || !e.value.item) return;
-     records.value.unshift({ ...e.value, amount: amt, id: Date.now() + Math.random().toString(36).substr(2, 9) });
-     localStorage.setItem('khhRecords',JSON.stringify(records.value));
-     e.value.amount=''; e.value.item='';
-   };
-
-   const delRec = (id) => {
-     records.value = records.value.filter(r => r.id !== id);
-     localStorage.setItem('khhRecords',JSON.stringify(records.value));
-   };
-   
-   onMounted(()=>{
-     const saved = JSON.parse(localStorage.getItem('khhRecords')||'[]');
-     records.value = saved.map(r => {
-        if(!r.id) return { ...r, id: Date.now() + Math.random().toString(36).substr(2, 9) };
-        return r;
-     });
-   });
-
-   return{tab,weatherKhh,countText,days,selDay,highlights,rateMop,e,cats,pays,records,addRec,delRec,catIcon,totalExpense};
- }
-}).mount('#app');
-</script>
 </body>
 </html>
